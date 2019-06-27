@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Button, Col, Row } from "reactstrap";
+import { Button, Col, Row } from "helpers/reactstrap";
 import { withApollo } from "react-apollo";
 import gql from "graphql-tag.macro";
 
@@ -10,6 +10,7 @@ export default withApollo(props => {
   const { engines, setSpeed, locked } = props;
   const applyCoolant = () => {
     const id = props.engines[0].id;
+    if (props.engines[0].heat < 0.01) return;
     const mutation = gql`
       mutation CoolEngine($id: ID!, $state: Boolean) {
         engineCool(id: $id, state: $state)

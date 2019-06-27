@@ -1,7 +1,7 @@
 import React, { Fragment, Component } from "react";
 import * as MacrosPrint from "../../macrosPrint";
 import * as Macros from "../../macros";
-import { Button, Input, Label } from "reactstrap";
+import { Button, Input, Label } from "helpers/reactstrap";
 import FontAwesome from "react-fontawesome";
 import allowedMacros from "./allowedMacros";
 import EventName from "../../../containers/FlightDirector/MissionConfig/EventName";
@@ -27,7 +27,8 @@ class ActionPreview extends Component {
       updateValues,
       stations,
       clients,
-      simple
+      simple,
+      steps
     } = this.props;
     return (
       <div className="timeline-item">
@@ -91,6 +92,7 @@ class ActionPreview extends Component {
                 lite
                 stations={stations}
                 clients={clients}
+                steps={steps}
               />
             );
           })()}
@@ -123,7 +125,8 @@ class TimelineItem extends Component {
       stations,
       clients,
       simArgs,
-      simple
+      simple,
+      steps
     } = this.props;
     const { expanded } = this.state;
     return (
@@ -156,6 +159,7 @@ class TimelineItem extends Component {
               <ActionPreview
                 simulatorId={simulatorId}
                 id={id}
+                steps={steps}
                 event={event}
                 simArgs={simArgs}
                 args={args}

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import gql from "graphql-tag.macro";
-import { Container, Row, Col, Button, Input } from "reactstrap";
+import { Container, Row, Col, Button, Input } from "helpers/reactstrap";
 import { Duration } from "luxon";
 import { withApollo, Mutation } from "react-apollo";
 import Tour from "helpers/tourHelper";
@@ -61,13 +61,17 @@ const SelfDestruct = ({ simulator, client, clientObj }) => {
   const { loading, data, subscribeToMore } = useQuery(SELF_DESTRUCT_QUERY, {
     variables: { simulatorId: simulator.id }
   });
-  useSubscribeToMore(subscribeToMore, SELF_DESTRUCT_SUB, {
-    variables: { simulatorId: simulator.id },
-    updateQuery: (previousResult, { subscriptionData }) => ({
-      ...previousResult,
-      simulators: subscriptionData.data.simulatorsUpdate
-    })
-  });
+  const config = React.useMemo(
+    () => ({
+      variables: { simulatorId: simulator.id },
+      updateQuery: (previousResult, { subscriptionData }) => ({
+        ...previousResult,
+        simulators: subscriptionData.data.simulatorsUpdate
+      })
+    }),
+    [simulator.id]
+  );
+  useSubscribeToMore(subscribeToMore, SELF_DESTRUCT_SUB, config);
   const { simulators } = data;
   if (loading || !simulators) return null;
   const { ship } = simulators[0];

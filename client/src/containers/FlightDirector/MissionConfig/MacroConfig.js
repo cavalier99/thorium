@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Col, Row } from "reactstrap";
+import { Col, Row } from "helpers/reactstrap";
 import { withApollo } from "react-apollo";
 import * as Macros from "../../../components/macros";
 class MacroConfig extends Component {
@@ -26,6 +26,7 @@ class MacroConfig extends Component {
         <Col sm="12">
           {EventMacro && (
             <EventMacro
+              {...this.props}
               updateArgs={this._handleArg}
               args={args || {}}
               client={client}

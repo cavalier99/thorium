@@ -1,6 +1,6 @@
 import React from "react";
 import gql from "graphql-tag.macro";
-import { Container, Button } from "reactstrap";
+import { Container, Button } from "helpers/reactstrap";
 import { withApollo } from "react-apollo";
 import { useQuery } from "@apollo/react-hooks";
 import { useSubscribeToMore } from "helpers/hooks/useQueryAndSubscribe";
@@ -53,13 +53,17 @@ const RemoteAccessCore = ({ simulator, client }) => {
   const { loading, data, subscribeToMore } = useQuery(REMOTE_ACCESS_QUERY, {
     variables: { simulatorId: simulator.id }
   });
-  useSubscribeToMore(subscribeToMore, REMOTE_ACCESS_SUB, {
-    variables: { simulatorId: simulator.id },
-    updateQuery: (previousResult, { subscriptionData }) => ({
-      ...previousResult,
-      simulators: subscriptionData.data.simulatorsUpdate
-    })
-  });
+  const config = React.useMemo(
+    () => ({
+      variables: { simulatorId: simulator.id },
+      updateQuery: (previousResult, { subscriptionData }) => ({
+        ...previousResult,
+        simulators: subscriptionData.data.simulatorsUpdate
+      })
+    }),
+    [simulator.id]
+  );
+  useSubscribeToMore(subscribeToMore, REMOTE_ACCESS_SUB, config);
   const { simulators } = data;
   if (loading || !simulators) return null;
   const { ship } = simulators[0];

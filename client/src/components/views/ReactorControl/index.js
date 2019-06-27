@@ -1,7 +1,7 @@
 import React from "react";
 import gql from "graphql-tag.macro";
 import { withApollo } from "react-apollo";
-import { Container, Row, Col, Button, Card } from "reactstrap";
+import { Container, Row, Col, Button, Card } from "helpers/reactstrap";
 import Tour from "helpers/tourHelper";
 import AnimatedNumber from "react-animated-number";
 import { useQuery } from "@apollo/react-hooks";
@@ -111,29 +111,41 @@ const ReactorControl = ({ simulator, client, clientObj }) => {
   const { loading, data, subscribeToMore } = useQuery(REACTOR_QUERY, {
     variables: { simulatorId: simulator.id }
   });
-  useSubscribeToMore(subscribeToMore, REACTOR_SUB, {
-    variables: { simulatorId: simulator.id },
-    updateQuery: (previousResult, { subscriptionData }) => {
-      return Object.assign({}, previousResult, {
-        reactors: subscriptionData.data.reactorUpdate
-      });
-    }
-  });
-  useSubscribeToMore(subscribeToMore, SYSTEMS_SUB, {
-    variables: { simulatorId: simulator.id },
-    updateQuery: (previousResult, { subscriptionData }) => {
-      return Object.assign({}, previousResult, {
-        systems: subscriptionData.data.systemsUpdate
-      });
-    }
-  });
-  useSubscribeToMore(subscribeToMore, DOCKING_SUB, {
-    variables: { simulatorId: simulator.id },
-    updateQuery: (previousResult, { subscriptionData }) => ({
-      ...previousResult,
-      simulators: subscriptionData.data.simulatorsUpdate
-    })
-  });
+  const reactorConfig = React.useMemo(
+    () => ({
+      variables: { simulatorId: simulator.id },
+      updateQuery: (previousResult, { subscriptionData }) => {
+        return Object.assign({}, previousResult, {
+          reactors: subscriptionData.data.reactorUpdate
+        });
+      }
+    }),
+    [simulator.id]
+  );
+  useSubscribeToMore(subscribeToMore, REACTOR_SUB, reactorConfig);
+  const systemsConfig = React.useMemo(
+    () => ({
+      variables: { simulatorId: simulator.id },
+      updateQuery: (previousResult, { subscriptionData }) => {
+        return Object.assign({}, previousResult, {
+          systems: subscriptionData.data.systemsUpdate
+        });
+      }
+    }),
+    [simulator.id]
+  );
+  useSubscribeToMore(subscribeToMore, SYSTEMS_SUB, systemsConfig);
+  const dockingConfig = React.useMemo(
+    () => ({
+      variables: { simulatorId: simulator.id },
+      updateQuery: (previousResult, { subscriptionData }) => ({
+        ...previousResult,
+        simulators: subscriptionData.data.simulatorsUpdate
+      })
+    }),
+    [simulator.id]
+  );
+  useSubscribeToMore(subscribeToMore, DOCKING_SUB, dockingConfig);
   const [measureRef, dimensions] = useMeasure();
   const { reactors, simulators, systems } = data;
   if (loading || !reactors) return null;

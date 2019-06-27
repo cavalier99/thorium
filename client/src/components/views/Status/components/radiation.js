@@ -1,5 +1,5 @@
 import React from "react";
-import { Label } from "reactstrap";
+import { Label } from "helpers/reactstrap";
 import gql from "graphql-tag.macro";
 import Dot from "./dots";
 import { useQuery } from "@apollo/react-hooks";
@@ -31,13 +31,17 @@ const Radiation = ({ simulator }) => {
   const { loading, data, subscribeToMore } = useQuery(QUERY, {
     variables: { simulatorId: simulator.id }
   });
-  useSubscribeToMore(subscribeToMore, SUB, {
-    variables: { simulatorId: simulator.id },
-    updateQuery: (previousResult, { subscriptionData }) => ({
-      ...previousResult,
-      simulators: subscriptionData.data.simulatorsUpdate
-    })
-  });
+  const config = React.useMemo(
+    () => ({
+      variables: { simulatorId: simulator.id },
+      updateQuery: (previousResult, { subscriptionData }) => ({
+        ...previousResult,
+        simulators: subscriptionData.data.simulatorsUpdate
+      })
+    }),
+    [simulator.id]
+  );
+  useSubscribeToMore(subscribeToMore, SUB, config);
   const { simulators } = data;
   if (loading || !simulators) return null;
   const { radiation } = simulators[0].ship;

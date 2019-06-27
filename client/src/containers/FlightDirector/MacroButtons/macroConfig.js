@@ -11,7 +11,7 @@ import {
   FormGroup,
   Label,
   Input
-} from "reactstrap";
+} from "helpers/reactstrap";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag.macro";
 import FontAwesome from "react-fontawesome";
@@ -131,7 +131,7 @@ const ActionList = ({
   );
 };
 
-const ActionConfig = ({ event, delay, args, updateAction }) => {
+const ActionConfig = ({ id, event, delay, args, updateAction }) => {
   return (
     <Fragment>
       <EventName id={event} />{" "}
@@ -146,7 +146,9 @@ const ActionConfig = ({ event, delay, args, updateAction }) => {
             />
           </FormGroup>
           <MacroWrapper
+            id={id}
             event={event}
+            delay={delay}
             args={args}
             updateMacro={(key, data) => updateAction(key, data)}
           />

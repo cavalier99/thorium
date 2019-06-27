@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from "react";
-import { Container, Row, Col, Button } from "reactstrap";
+import { Container, Row, Col, Button } from "helpers/reactstrap";
 import { FormattedMessage } from "react-intl";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag.macro";
@@ -356,12 +356,12 @@ class JumpDrive extends Component {
                 >
                   {ringsExtended ? (
                     <FormattedMessage
-                      defaultMessage="Retract Jump Rings"
+                      defaultMessage="Retract Rings"
                       id="jump-drive-retract-jump-rings"
                     />
                   ) : (
                     <FormattedMessage
-                      defaultMessage="Extend Jump Rings"
+                      defaultMessage="Extend Rings"
                       id="jump-drive-extend-jump-rings"
                     />
                   )}

@@ -2,7 +2,7 @@ import React from "react";
 import gql from "graphql-tag.macro";
 import { withApollo } from "react-apollo";
 import { TypingField, InputField } from "../../generic/core";
-import { Container, Row, Col, Button } from "reactstrap";
+import { Container, Row, Col, Button } from "helpers/reactstrap";
 import "./style.scss";
 import { useQuery } from "@apollo/react-hooks";
 import { useSubscribeToMore } from "helpers/hooks/useQueryAndSubscribe";
@@ -109,21 +109,29 @@ const CargoControlCore = ({ simulator, client }) => {
   const { loading, data, subscribeToMore } = useQuery(INVENTORY_QUERY, {
     variables: { simulatorId: simulator.id }
   });
-  useSubscribeToMore(subscribeToMore, LOG_SUB, {
-    variables: { simulatorId: simulator.id },
-    updateQuery: (previousResult, { subscriptionData }) => ({
-      ...previousResult,
-      simulators: subscriptionData.data.simulatorsUpdate
-    })
-  });
-  useSubscribeToMore(subscribeToMore, INVENTORY_SUB, {
-    variables: { simulatorId: simulator.id },
-    updateQuery: (previousResult, { subscriptionData }) => {
-      return Object.assign({}, previousResult, {
-        inventory: subscriptionData.data.inventoryUpdate
-      });
-    }
-  });
+  const logConfig = React.useMemo(
+    () => ({
+      variables: { simulatorId: simulator.id },
+      updateQuery: (previousResult, { subscriptionData }) => ({
+        ...previousResult,
+        simulators: subscriptionData.data.simulatorsUpdate
+      })
+    }),
+    [simulator.id]
+  );
+  useSubscribeToMore(subscribeToMore, LOG_SUB, logConfig);
+  const inventoryConfig = React.useMemo(
+    () => ({
+      variables: { simulatorId: simulator.id },
+      updateQuery: (previousResult, { subscriptionData }) => {
+        return Object.assign({}, previousResult, {
+          inventory: subscriptionData.data.inventoryUpdate
+        });
+      }
+    }),
+    [simulator.id]
+  );
+  useSubscribeToMore(subscribeToMore, INVENTORY_SUB, inventoryConfig);
   const { simulators, decks, inventory } = data;
   if (loading || !simulators) return null;
   const { ship } = simulators[0];

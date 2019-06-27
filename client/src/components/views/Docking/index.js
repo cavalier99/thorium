@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col, Button } from "reactstrap";
+import { Container, Row, Col, Button } from "helpers/reactstrap";
 import gql from "graphql-tag.macro";
 import { withApollo } from "react-apollo";
 import { Clamps, Ramps, Doors, Legs } from "./graphics";
@@ -59,13 +59,17 @@ const Docking = ({ simulator, client, clientObj }) => {
   const { loading, data, subscribeToMore } = useQuery(DOCKING_QUERY, {
     variables: { simulatorId: simulator.id }
   });
-  useSubscribeToMore(subscribeToMore, DOCKING_SUB, {
-    variables: { simulatorId: simulator.id },
-    updateQuery: (previousResult, { subscriptionData }) => ({
-      ...previousResult,
-      simulators: subscriptionData.data.simulatorsUpdate
-    })
-  });
+  const config = React.useMemo(
+    () => ({
+      variables: { simulatorId: simulator.id },
+      updateQuery: (previousResult, { subscriptionData }) => ({
+        ...previousResult,
+        simulators: subscriptionData.data.simulatorsUpdate
+      })
+    }),
+    [simulator.id]
+  );
+  useSubscribeToMore(subscribeToMore, DOCKING_SUB, config);
   const { simulators } = data;
   if (loading || !simulators) return null;
   const { ship } = simulators[0];

@@ -123,6 +123,7 @@ const schema = gql`
     setVerifyDamage(simulatorId: ID!, verifyStep: Boolean!): String
     setBridgeMessaging(id: ID!, messaging: Boolean!): String
     setSimulatorAssets(id: ID!, assets: SimulatorAssetsInput!): String
+    setSimulatorSoundEffects(id: ID!, soundEffects: JSON!): String
     updateSimulatorLighting(id: ID!, lighting: LightingInput!): String
     setSimulatorHasPrinter(simulatorId: ID!, hasPrinter: Boolean!): String
     setSimulatorHasLegs(simulatorId: ID!, hasLegs: Boolean!): String
@@ -272,6 +273,7 @@ const resolver = {
         () => pubsub.asyncIterator("simulatorsUpdate"),
         (rootValue, { simulatorId, template }) => {
           let returnVal = rootValue;
+          if (!returnVal) return false;
           if (template) returnVal = returnVal.filter(s => s.template);
           if (simulatorId)
             returnVal = returnVal.filter(s => s.id === simulatorId);

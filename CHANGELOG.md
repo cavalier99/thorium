@@ -1,3 +1,48 @@
+# [1.14.0](https://github.com/Thorium-Sim/thorium/compare/1.13.0...1.14.0) (2019-06-22)
+
+
+### Bug Fixes
+
+* **Command Line:** Command line output now shows args for the command. Closes [#2353](https://github.com/Thorium-Sim/thorium/issues/2353) ([a76262a](https://github.com/Thorium-Sim/thorium/commit/a76262a))
+* **Docking:** Resolves issues with erratic docking. Closes [#2338](https://github.com/Thorium-Sim/thorium/issues/2338) ([5c755cf](https://github.com/Thorium-Sim/thorium/commit/5c755cf))
+* **Engines:** Fixes an issue where clicking the coolant button too many times can cause lag. Closes [#2309](https://github.com/Thorium-Sim/thorium/issues/2309) ([2646709](https://github.com/Thorium-Sim/thorium/commit/2646709))
+* **Engines:** Fixes an issue where engine speed levels cannot be configured properly. Closes [#2347](https://github.com/Thorium-Sim/thorium/issues/2347) ([973a989](https://github.com/Thorium-Sim/thorium/commit/973a989))
+* **Space EdVentures:** Makes it possible to change the flight type of a Space EdVentures flight. ([f7493e7](https://github.com/Thorium-Sim/thorium/commit/f7493e7))
+* **Stealth Field:** When stealth field is set to be always activated, the Activate/Deactivate button no longer appears. Closes [#2342](https://github.com/Thorium-Sim/thorium/issues/2342). Closes [#2352](https://github.com/Thorium-Sim/thorium/issues/2352). ([587ceb4](https://github.com/Thorium-Sim/thorium/commit/587ceb4))
+
+
+### Features
+
+* **Clear Layout:** Makes the clear layout overlay on top of the viewscreen contents. Closes [#2349](https://github.com/Thorium-Sim/thorium/issues/2349) ([a7bdbd7](https://github.com/Thorium-Sim/thorium/commit/a7bdbd7))
+* **Command Line:** Add command line feedback requests to the core feed. Closes [#2297](https://github.com/Thorium-Sim/thorium/issues/2297) ([abbac19](https://github.com/Thorium-Sim/thorium/commit/abbac19))
+* **Command Line:** Adds options for changing the alert level from the command line. Closes [#2234](https://github.com/Thorium-Sim/thorium/issues/2234) ([7487f91](https://github.com/Thorium-Sim/thorium/commit/7487f91))
+* **CRM-114:** Makes it possible to set the image defaults when configuring the CRM-114 system. Closes [#2210](https://github.com/Thorium-Sim/thorium/issues/2210) ([bbf5ce7](https://github.com/Thorium-Sim/thorium/commit/bbf5ce7))
+* **Library:** Add the ability to set the visible font of library entries. Closes [#2350](https://github.com/Thorium-Sim/thorium/issues/2350) ([e94c62c](https://github.com/Thorium-Sim/thorium/commit/e94c62c))
+* **Officers Log:** Add an officers log core for viewing officer log entries. Closes [#1903](https://github.com/Thorium-Sim/thorium/issues/1903) ([944adc8](https://github.com/Thorium-Sim/thorium/commit/944adc8))
+* **Space EdVentures:** Makes it possible to remove stations from the Space EdVentures transmission. Closes [#2295](https://github.com/Thorium-Sim/thorium/issues/2295) ([3d73685](https://github.com/Thorium-Sim/thorium/commit/3d73685))
+* **Viewscreen:** Add "Undocking" viewscreen. ([6dff211](https://github.com/Thorium-Sim/thorium/commit/6dff211))
+* **Viewscreen:** Add the ability to change all viewscreens at the same time, including differentiating between primary and secondary viewscreens. Closes [#2351](https://github.com/Thorium-Sim/thorium/issues/2351) ([9fb03ef](https://github.com/Thorium-Sim/thorium/commit/9fb03ef))
+
+# [1.13.0](https://github.com/Thorium-Sim/thorium/compare/1.12.0...1.13.0) (2019-06-20)
+
+
+### Bug Fixes
+
+* **Navigation Advanced:** Fixes an issue when speeds are set to a value over 1. Closes [#2268](https://github.com/Thorium-Sim/thorium/issues/2268) ([9309eb5](https://github.com/Thorium-Sim/thorium/commit/9309eb5))
+* **Navigation Advanced:** Fixes the formatting when going a speed that is longer than the available space in the box. Closes [#2269](https://github.com/Thorium-Sim/thorium/issues/2269) ([b95ff26](https://github.com/Thorium-Sim/thorium/commit/b95ff26))
+* **Navigation Advanced:** Makes it so one engine cannot be changed unless the other is deactivated. Closes [#2267](https://github.com/Thorium-Sim/thorium/issues/2267) ([34b923b](https://github.com/Thorium-Sim/thorium/commit/34b923b))
+* **Quote of the Day:** Add more quotes. ([8a89b8e](https://github.com/Thorium-Sim/thorium/commit/8a89b8e))
+* **Sound Picker:** Properly fixes the sound picker. Closes  [#2308](https://github.com/Thorium-Sim/thorium/issues/2308) ([316747d](https://github.com/Thorium-Sim/thorium/commit/316747d))
+
+
+### Features
+
+* **File Explorer:** Adds audio preview to the file explorer. ([3167ffe](https://github.com/Thorium-Sim/thorium/commit/3167ffe))
+* **Interface Sound Effects:** Adds interface sound effects to Thorium for things like clicking buttons, changing cards, and logging in. These are opt-in and must be configured for each simulator with the Sound Effects config. You can use your own sounds, or use sounds from this [bonus sound pack](https://s3.amazonaws.com/thoriumsim/Bonus%20Sounds.zip) that can be imported into Thorium. Every sound effect can have multiple sounds associated, and it will pick a random one whenever the sound is played. Closes [#2223](https://github.com/Thorium-Sim/thorium/issues/2223) ([bc52316](https://github.com/Thorium-Sim/thorium/commit/bc52316))
+* **Issue Tracker:** Makes it possible to upload an image through the issue tracker. Closes [#2340](https://github.com/Thorium-Sim/thorium/issues/2340) ([7e970af](https://github.com/Thorium-Sim/thorium/commit/7e970af))
+* **Status:** Adds an extra field for tracking the number of people on the ship. Closes [#2315](https://github.com/Thorium-Sim/thorium/issues/2315) ([21fda91](https://github.com/Thorium-Sim/thorium/commit/21fda91))
+* **Viewscreen:** Adds a picture-in-picture feature to the viewscreen. Configure it with the Viewscreen core or in your timeline with macros. Refs [#2316](https://github.com/Thorium-Sim/thorium/issues/2316) ([ad7e02b](https://github.com/Thorium-Sim/thorium/commit/ad7e02b))
+
 # [1.12.0](https://github.com/Thorium-Sim/thorium/compare/1.11.0...1.12.0) (2019-06-14)
 
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Input, Label } from "reactstrap";
+import { Button, Input, Label } from "helpers/reactstrap";
 import gql from "graphql-tag.macro";
 import { Mutation } from "react-apollo";
 import { useSubscribeToMore } from "helpers/hooks/useQueryAndSubscribe";
@@ -39,15 +39,18 @@ const AlertConditionCore = ({ simulator: sim }) => {
       id: sim.id
     }
   });
-
-  useSubscribeToMore(subscribeToMore, SUB, {
-    variables: { id: sim.id },
-    updateQuery: (previousResult, { subscriptionData }) => {
-      return Object.assign({}, previousResult, {
-        simulators: subscriptionData.data.simulatorsUpdate
-      });
-    }
-  });
+  const config = React.useMemo(
+    () => ({
+      variables: { id: sim.id },
+      updateQuery: (previousResult, { subscriptionData }) => {
+        return Object.assign({}, previousResult, {
+          simulators: subscriptionData.data.simulatorsUpdate
+        });
+      }
+    }),
+    [sim.id]
+  );
+  useSubscribeToMore(subscribeToMore, SUB, config);
   if (loading) return null;
   const { simulators } = data;
   const simulator = simulators[0];

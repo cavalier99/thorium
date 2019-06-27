@@ -2,7 +2,7 @@ import React from "react";
 import Clients from "./Clients";
 import SetsPicker from "./SetsPicker";
 import { Link } from "react-router-dom";
-import { Container, Button, ButtonGroup } from "reactstrap";
+import { Container, Button, ButtonGroup } from "helpers/reactstrap";
 import { withApollo, Query, Mutation } from "react-apollo";
 import gql from "graphql-tag.macro";
 import Tour from "helpers/tourHelper";
@@ -13,6 +13,7 @@ const FlightQuery = gql`
       id
       name
       flightType
+      transmitted
       running
     }
   }
@@ -237,7 +238,7 @@ This can only be done once per flight and should only be done when the flight is
                 >
                   Export Flight
                 </Button>
-                {flight.flightType && (
+                {!flight.transmitted && (
                   <Mutation
                     mutation={gql`
                       mutation TransmitFlight($flightId: ID!) {

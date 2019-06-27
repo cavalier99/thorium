@@ -1,6 +1,6 @@
 import React from "react";
 import gql from "graphql-tag.macro";
-import { Container, Row, Col, Button } from "reactstrap";
+import { Container, Row, Col, Button } from "helpers/reactstrap";
 import { withApollo } from "react-apollo";
 import "./style.scss";
 import { useQuery } from "@apollo/react-hooks";
@@ -45,13 +45,17 @@ const DockingCore = ({ simulator, client }) => {
   const { loading, data, subscribeToMore } = useQuery(DOCKING_QUERY, {
     variables: { simulatorId: simulator.id }
   });
-  useSubscribeToMore(subscribeToMore, DOCKING_SUB, {
-    variables: { simulatorId: simulator.id },
-    updateQuery: (previousResult, { subscriptionData }) => ({
-      ...previousResult,
-      simulators: subscriptionData.data.simulatorsUpdate
-    })
-  });
+  const config = React.useMemo(
+    () => ({
+      variables: { simulatorId: simulator.id },
+      updateQuery: (previousResult, { subscriptionData }) => ({
+        ...previousResult,
+        simulators: subscriptionData.data.simulatorsUpdate
+      })
+    }),
+    [simulator.id]
+  );
+  useSubscribeToMore(subscribeToMore, DOCKING_SUB, config);
   const { simulators } = data;
   if (loading || !simulators) return null;
   const { ship } = simulators[0];
